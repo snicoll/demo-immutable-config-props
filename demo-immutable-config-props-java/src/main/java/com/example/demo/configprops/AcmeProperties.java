@@ -1,36 +1,34 @@
 package com.example.demo.configprops;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.util.unit.DataSize;
 
 @ConfigurationProperties("acme")
+@ConstructorBinding
 public class AcmeProperties {
 
-	private Duration timeout = Duration.ofSeconds(10);
+	private final Duration timeout;
 
-	private DataSize bufferSize;
+	private final DataSize bufferSize;
 
-	private final Security security = new Security();
+	private final Security security;
+
+	public AcmeProperties(Duration timeout, DataSize bufferSize, Security security) {
+		this.timeout = timeout;
+		this.bufferSize = bufferSize;
+		this.security = security;
+	}
 
 	public Duration getTimeout() {
 		return this.timeout;
 	}
 
-	public void setTimeout(Duration timeout) {
-		this.timeout = timeout;
-	}
-
 	public DataSize getBufferSize() {
 		return this.bufferSize;
-	}
-
-	public void setBufferSize(DataSize bufferSize) {
-		this.bufferSize = bufferSize;
 	}
 
 	public Security getSecurity() {
@@ -39,34 +37,28 @@ public class AcmeProperties {
 
 	public static class Security {
 
-		private String username = "user";
+		private final String username;
 
-		private String password;
+		private final String password;
 
-		private List<String> roles = new ArrayList<>(Collections.singleton("USER"));
+		private final List<String> roles;
+
+		public Security(String username, String password, List<String> roles) {
+			this.username = username;
+			this.password = password;
+			this.roles = roles;
+		}
 
 		public String getUsername() {
 			return this.username;
-		}
-
-		public void setUsername(String username) {
-			this.username = username;
 		}
 
 		public String getPassword() {
 			return this.password;
 		}
 
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
 		public List<String> getRoles() {
 			return this.roles;
-		}
-
-		public void setRoles(List<String> roles) {
-			this.roles = roles;
 		}
 	}
 }

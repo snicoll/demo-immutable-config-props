@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>demo-immutable-config-props-java</module>
+		<module>demo-immutable-config-props-kotlin</module>
 	</modules>
 
 </project>

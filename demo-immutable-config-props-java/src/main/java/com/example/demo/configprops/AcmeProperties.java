@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.util.unit.DataSize;
 
 @ConfigurationProperties("acme")
@@ -17,7 +18,7 @@ public class AcmeProperties {
 
 	private final Security security;
 
-	public AcmeProperties(Duration timeout, DataSize bufferSize, Security security) {
+	public AcmeProperties(@DefaultValue("10s") Duration timeout, DataSize bufferSize, Security security) {
 		this.timeout = timeout;
 		this.bufferSize = bufferSize;
 		this.security = security;
@@ -43,7 +44,8 @@ public class AcmeProperties {
 
 		private final List<String> roles;
 
-		public Security(String username, String password, List<String> roles) {
+		public Security(@DefaultValue("user") String username, String password,
+				@DefaultValue("USER") List<String> roles) {
 			this.username = username;
 			this.password = password;
 			this.roles = roles;
